@@ -1,4 +1,5 @@
 name: esp32 port
+
 on:
   push:
   pull_request:
@@ -27,11 +28,21 @@ jobs:
         run: source tools/ci.sh && ci_esp32_idf402_setup
       - name: Build
         run: source tools/ci.sh && ci_esp32_build
-      - name: Upload artifact
+      - name: Upload bootloader
         uses: actions/upload-artifact@v3
         with:
-          name: build-idf402-artifact
-          path: ./build/*.bin
+          name: build-idf402-bootloader
+          path: build-GENERIC/bootloader/bootloader.bin
+      - name: Upload partition table
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-idf402-partition-table
+          path: build-GENERIC/partition_table/partition-table.bin
+      - name: Upload micropython
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-idf402-micropython
+          path: build-GENERIC/micropython.bin
 
   build_idf44:
     runs-on: ubuntu-20.04
@@ -43,8 +54,18 @@ jobs:
         run: source tools/ci.sh && ci_esp32_idf44_setup
       - name: Build
         run: source tools/ci.sh && ci_esp32_build
-      - name: Upload artifact
+      - name: Upload bootloader
         uses: actions/upload-artifact@v3
         with:
-          name: build-idf44-artifact
-          path: ./build/*.bin
+          name: build-idf44-bootloader
+          path: build-GENERIC/bootloader/bootloader.bin
+      - name: Upload partition table
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-idf44-partition-table
+          path: build-GENERIC/partition_table/partition-table.bin
+      - name: Upload micropython
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-idf44-micropython
+          path: build-GENERIC/micropython.bin
